@@ -1,0 +1,112 @@
+{
+  "Dekel": [
+    {
+      "rol": "user",
+      "texto": "Programar"
+    },
+    {
+      "rol": "user",
+      "texto": "Todo lo relacionado a la informatica"
+    },
+    {
+      "rol": "user",
+      "texto": "En equipo"
+    },
+    {
+      "rol": "user",
+      "texto": "Programar"
+    },
+    {
+      "rol": "user",
+      "texto": "Informatica"
+    },
+    {
+      "rol": "user",
+      "texto": "Equipo"
+    },
+    {
+      "rol": "ia",
+      "texto": ""
+    },
+    {
+      "rol": "user",
+      "texto": "Si"
+    },
+    {
+      "rol": "user",
+      "texto": "No"
+    },
+    {
+      "rol": "user",
+      "texto": "Antes"
+    },
+    {
+      "rol": "user",
+      "texto": "Programar"
+    },
+    {
+      "rol": "user",
+      "texto": "Informatica"
+    },
+    {
+      "rol": "user",
+      "texto": "En equipo"
+    },
+    {
+      "rol": "ia",
+      "texto": "<think>\nOkay, the user has been answering questions about their interests and preferences. They mentioned they enjoy programming and working in teams. Based on that, I need to suggest two career paths in IT. Let me think about what fits someone who likes working with others and is into programming.\n\nFirst, maybe a software developer role. That's a common IT career. They can work on projects, collaborate with teams, and use their programming skills. The user might appreciate the flexibility and the ability to work on their own projects.\n\nAnother option could be a project manager in IT. They need to coordinate teams, manage timelines, and ensure projects meet goals. This aligns with their preference for working in teams. It's a leadership role that combines technical skills with management, which might be interesting for someone who likes both working with others and solving problems.\n\nI should explain each briefly, highlighting the key aspects that match their interests. Make sure to keep the tone friendly and encouraging. Also, check if there's anything else they might need, like further details or additional options. Maybe offer to help with more suggestions if they want.\n</think>\n\n¡Perfecto! Basándote en tus intereses en la programación y en trabajar en equipo, dos trayectorias que podrían ser ideales para ti son:\n\n### **1. Desarrollador de Software o Programador de Aplicaciones**  \n**¿Por qué te gustaría?**  \n- **Tienes la habilidad técnica** que necesitas para crear soluciones tecnológicas.  \n- **Trabajo en equipo** es clave en este rol, ya sea como parte de un equipo de desarrollo o como freelancer.  \n- **Flexibilidad** para elegir proyectos, horarios o dominios (web, móviles, datos, etc.).  \n- **Desafíos constantes** para aprender nuevas tecnologías y resolver problemas complejos.  \n\n**¿Qué te gustaría más?**  \n- Trabajar en proyectos grandes y colaborar con equipos multidisciplinarios.  \n- Aprender a gestionar tareas, priorizar y trabajar en entornos ágiles (como Scrum o Kanban).  \n\n---\n\n### **2. Gerente de Proyectos en Tecnología o Director de Desarrollo**  \n**¿Por qué te gustaría?**  \n- **Uso de tu habilidad técnica** para planificar y dirigir proyectos.  \n- **Trabajo en equipo** es esencial para coordinar equipos de desarrollo, equipos de diseño o incluso clientes.  \n- **Desarrollo de habilidades de liderazgo** y gestión de recursos, que son valiosas en cualquier área profesional.  \n- **Control de tiempo** y **estrategia** son aspectos que te gustan, especialmente si te apasiona la planificación.  \n\n**¿Qué te gustaría más?**  \n- Liderar proyectos de alto impacto y trabajar con equipos multidisciplinarios.  \n- Aprender a comunicar ideas técnicas a personas no técnicas y a gestionar expectativas.  \n\n---\n\n¿Te gustaría profundizar en alguna de estas opciones? Puedo ayudarte a evaluar el enfoque, los requisitos o incluso encontrar oportunidades de aprendizaje en el ámbito de la tecnología. ¡Estoy aquí para asesorarte! 🌟"
+    }
+  ],
+  "dekel": [
+    {
+      "rol": "user",
+      "texto": "si"
+    },
+    {
+      "rol": "user",
+      "texto": "no"
+    },
+    {
+      "rol": "user",
+      "texto": "a"
+    },
+    {
+      "rol": "ia",
+      "texto": ""
+    },
+    {
+      "rol": "user",
+      "texto": "si"
+    },
+    {
+      "rol": "user",
+      "texto": "non"
+    },
+    {
+      "rol": "user",
+      "texto": "equipo"
+    },
+    {
+      "rol": "ia",
+      "texto": ""
+    }
+  ],
+  "aids": [
+    {
+      "rol": "user",
+      "texto": "aosdbn"
+    },
+    {
+      "rol": "user",
+      "texto": "asdoub"
+    },
+    {
+      "rol": "user",
+      "texto": "asdoib}"
+    },
+    {
+      "rol": "ia",
+      "texto": ""
+    }
+  ]
+}
