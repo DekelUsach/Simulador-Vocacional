@@ -3,13 +3,14 @@ import { Ollama } from "@llamaindex/ollama";
 import { z } from "zod";
 import { empezarChat } from "./lib/cli-chat.js";
 import { Estudiantes } from "./lib/estudiantes.js";
+import { simuladorVocacional } from "./lib/simulador-vocacional.js";
+import { createInterface } from "readline";
 
 // Configuración
 const DEBUG = true;
 
 // Instancia de la clase Estudiantes
 const estudiantes = new Estudiantes();
-
 
 // System prompt básico
 const systemPrompt = `
@@ -86,16 +87,37 @@ const elAgente = agent({
     systemPrompt: systemPrompt,
 });
 
-// Mensaje de bienvenida
 const mensajeBienvenida = `
-¡Hola! Soy tu asistente para gestionar estudiantes.
-Puedo ayudarte a:
-- Buscar estudiantes por nombre o apellido
-- Agregar nuevos estudiantes
-- Mostrar la lista completa de estudiantes
+¡Hola! Soy tu asistente. ¿Qué modo deseas usar?
+1) Gestor de Estudiantes
+2) Simulador Vocacional
 
-¿Qué necesitás?
+Escribe 1 o 2 y presiona ENTER:
 `;
 
-// Iniciar el chat
-empezarChat(elAgente, mensajeBienvenida);
+// Menú inicial para elegir modo
+async function mainMenu() {
+    const rl = createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    rl.question(mensajeBienvenida, async (modo) => {
+        if (modo.trim() === "1") {
+            console.log("\nEntrando al Gestor de Estudiantes...\n");
+            rl.close();
+            empezarChat(elAgente, "¡Bienvenido al gestor de estudiantes!");
+        } else if (modo.trim() === "2") {
+            console.log("\nEntrando al Simulador Vocacional...\n");
+            rl.close();
+            await simuladorVocacional();
+        } else {
+            console.log("Por favor, ingresa una opción válida (1 o 2).");
+            rl.close();
+            mainMenu();
+        }
+    });
+}
+
+// Iniciar el menú principal
+mainMenu();
