@@ -48,25 +48,47 @@ export async function simuladorVocacional() {
     });
   }
 
-  console.log("¡Hola! Soy tu simulador vocacional. Te haré unas preguntas para ayudarte a descubrir posibles carreras, oficios o tareas que podrían interesarte.");
-  guardar("¡Hola! Soy tu simulador vocacional. Te haré unas preguntas para ayudarte a descubrir posibles carreras, oficios o tareas que podrían interesarte.", "Bot");
+  // Presentación amable y clara
+  console.log("¡Hola! Soy tu orientador vocacional IA. Te haré algunas preguntas sobre tus intereses y preferencias para sugerirte posibles caminos educativos o laborales.");
+  guardar("¡Hola! Soy tu orientador vocacional IA. Te haré algunas preguntas sobre tus intereses y preferencias para sugerirte posibles caminos educativos o laborales.", "Bot");
 
-  for (const pregunta of preguntas) {
-    await preguntar(pregunta);
+  // Realizar al menos 3 preguntas abiertas (pueden ser más si gustas)
+  for (let i = 0; i < preguntas.length; i++) {
+    await preguntar(preguntas[i]);
+    if (i === 2) { // Luego de 3 preguntas, se puede dar la opción de seguir o no
+      await new Promise(resolve => {
+        rl.question("¿Querés responder más preguntas para afinar la recomendación? (sí/no)\n", respuesta => {
+          guardar("¿Querés responder más preguntas para afinar la recomendación?", "Bot");
+          guardar(respuesta, "Usuario");
+          if (respuesta.trim().toLowerCase() !== "sí") {
+            resolve("break");
+          } else {
+            resolve();
+          }
+        });
+      }).then(x => { if (x === "break") preguntas.length = i + 1; });
+    }
   }
 
   mostrarMemoria(historial);
 
-  // Construye el prompt para Ollama
+  // System prompt claro y empático, con instrucciones explícitas
   const prompt = `
-Eres un orientador vocacional virtual. Recibirás una serie de respuestas de un usuario sobre sus intereses, gustos, preferencias y expectativas laborales.
+Eres un orientador vocacional empático y profesional. Recibirás una serie de respuestas de un usuario sobre sus intereses, gustos, preferencias y expectativas laborales.
 
-En base a TODA la información brindada (sin limitarte a una lista predefinida), analiza el perfil y recomienda de forma flexible y concisa al menos dos opciones de carreras, oficios o tareas que podrían ser afines para esa persona. Pueden ser universitarias, tecnicaturas, oficios, arte, deportes, emprendimientos, etc. Explica brevemente por qué haces esas recomendaciones, relacionándolas con las respuestas del usuario. Si lo ves relevante, puedes sugerir actividades concretas, trayectos alternativos, o incluso combinaciones. No repitas literalmente las respuestas, sintetiza y personaliza la orientación.
+Tu tarea es:
+- Analizar toda la información brindada (usa también la memoria de la conversación para personalizar la respuesta).
+- Recomendar de forma clara, amable y flexible al menos dos opciones concretas de carreras, oficios o trayectorias educativas/laborales que podrían ser afines para esa persona.
+- Explicar brevemente por qué haces esas recomendaciones, vinculándolas con lo que respondió el usuario.
+- Si es relevante, sugerir actividades concretas, trayectos alternativos o combinaciones.
+- No repitas literalmente las respuestas: sintetiza y personaliza.
+- Mantén siempre un tono accesible y alentador.
+- Si el usuario vuelve a preguntar, puedes referenciar lo que ya ha contado.
 
-Respuestas del usuario:
-${respuestas.map((r, i) => `${i + 1}. ${r}`).join('\n')}
+Historial de la conversación:
+${historial.map(h => `${h.autor}: ${h.mensaje}`).join('\n')}
 
-Recomendaciones:
+Solo responde con la orientación vocacional (no repitas las preguntas).
 `;
 
   // Llama a Ollama para obtener la sugerencia personalizada
@@ -81,8 +103,38 @@ Recomendaciones:
     console.log(sugerenciaTexto);
   }
 
-  // Referenciar una respuesta para demostrar memoria
-  console.log(`\nPor ejemplo, mencionaste: "${respuestas[0]}". Eso fue tenido en cuenta para las sugerencias.`);
+  // Demostrar memoria: referencia explícita a una respuesta anterior
+  if (respuestas.length > 0) {
+    console.log(`\nPor ejemplo, mencionaste: "${respuestas[0]}". Eso fue tenido en cuenta para las sugerencias.\n`);
+  }
 
   rl.close();
+}
+let sugerenciaTexto = "\nNo se pudo obtener sugerencias. Intenta de nuevo.\n";
+try {
+  const respuesta = await ollamaLLM.complete({ prompt });
+  // Depuración: muestra toda la respuesta del modelo
+  // console.log("DEBUG OLLAMA:", respuesta);
+
+  let result = null;
+  if (respuesta?.data?.result) {
+    result = respuesta.data.result;
+  } else if (respuesta?.result) {
+    result = respuesta.result;
+  } else if (typeof respuesta === "string") {
+    result = respuesta;
+  }
+
+  if (result) {
+    sugerenciaTexto = "\nSugerencias personalizadas para ti:\n" + result;
+    guardar(sugerenciaTexto, "Bot");
+    console.log(sugerenciaTexto);
+  } else {
+    // Muestra la respuesta cruda para depuración
+    console.error("Respuesta inesperada del modelo:", respuesta);
+    console.log(sugerenciaTexto);
+  }
+} catch (e) {
+  console.error("Error al consultar el modelo:", e);
+  console.log(sugerenciaTexto);
 }
