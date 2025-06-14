@@ -4,7 +4,7 @@ import { saveMessage, getConversation } from './memoriaConversacion.js';
 const MODEL_NAME = 'qwen3:1.7b';
 
 const SYSTEM_PROMPT = `
-Eres un orientador vocacional IA. Tu objetivo es ayudar al usuario a identificar posibles trayectorias educativas o laborales. Haz preguntas abiertas sobre intereses, gustos y preferencias. Siempre responde de manera empática, clara y accesible. Si tienes historial previo, úsalo como referencia.
+Eres un orientador vocacional IA. Tu objetivo es ayudar al usuario a identificar posibles trayectorias educativas o laborales. Haz preguntas abiertas sobre intereses, gustos y preferencias. Siempre responde de manera empática, clara y accesible. Si tienes historial previo, úsalo como referencia. Asegurate de que las respuestas del usuario tengan sentido, de no tenerlo, ignorar esa pregunta.
 `;
 
 const PREGUNTAS = [
@@ -28,12 +28,10 @@ export async function iniciarSimulador(nombreUsuario) {
     saveMessage(nombreUsuario, { rol: 'user', texto: respuesta });
   }
 
-  // Armamos los mensajes para el modelo
   let messages = [
     { role: "system", content: SYSTEM_PROMPT }
   ];
 
-  // Solo usamos la última conversación como contexto (opcional)
   if (historial.length > 0) {
     const ultimosMensajes = historial.slice(-6); // solo los últimos 3 pares
     ultimosMensajes.forEach(msg => {
